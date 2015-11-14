@@ -3,8 +3,9 @@ import Cube3D from '../components/Cube3D';
 
 class AppController {
     
-    constructor() {
+    constructor(selector) {
 
+        this.selector = selector;
         this.elements = [];
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera();
@@ -12,9 +13,7 @@ class AppController {
 
         this.renderer = new THREE.WebGLRenderer();
 
-        console.log(document.getElementById("app"));
-
-        document.body.appendChild( this.renderer.domElement );
+        this.selector.appendChild( this.renderer.domElement );
         this.handleResize()
         window.addEventListener('resize', this.handleResize.bind(this), false);
 

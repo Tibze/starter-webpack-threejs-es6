@@ -5,7 +5,8 @@ function init(){
     console.log("** Yopi **");
 
     // Entry Point
-    new AppController();
+    var selector = document.getElementById('app');
+    new AppController(selector);
 }
 
 window.onload = init;

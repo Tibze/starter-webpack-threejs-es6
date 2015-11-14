@@ -4,7 +4,7 @@ class Cube3D {
 
     constructor() {
         var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var material = new THREE.MeshBasicMaterial({color: 0x330000});
+        var material = new THREE.MeshBasicMaterial({color: 0x669955});
         this.mesh = new THREE.Mesh( geometry, material );
     }
 

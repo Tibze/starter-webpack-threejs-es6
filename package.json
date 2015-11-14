@@ -15,15 +15,16 @@
     "browser-sync": "^2.10.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
+    "gulp-sass": "^2.1.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.6",
-    "jquery": "^2.1.4",
     "webpack": "^1.10.5",
     "webpack-dev-server": "^1.10.1",
     "webpack-stream": "^2.0.0"
   },
   "dependencies": {
+    "gsap": "^1.18.0",
     "three": "^0.73.0"
   }
 }
