@@ -27,14 +27,14 @@ $ npm install
 $ gulp
 ```
 
-Build
-```sh
-$ gulp build
-```
-
 Jshint (es6)
 ```sh
 $ gulp lint
+```
+
+Build
+```sh
+$ gulp build
 ```
 
 It will generate a production package in /dist folder
