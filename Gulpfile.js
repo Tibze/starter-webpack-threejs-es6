@@ -14,6 +14,8 @@ var sass = require('gulp-sass');
 var del = require('del');
 var stripDebug = require('gulp-strip-debug');
 var clean = require('gulp-clean');
+var plumber = require('gulp-plumber');
+var notify = require('gulp-notify');
 
 var path = {
     BASE: './',
@@ -28,8 +30,16 @@ var path = {
     DIST: './dist'
 };
 
+function alertError(error){
+
+    notify.onError({title: "Error", message: error.Message, sound: "Pop"})(error);
+    console.log(error.toString());
+    this.emit("end");  
+
+}
+
 gulp.task('webpack', [], function() {
-    return gulp.src(path.JS)
+    gulp.src(path.JS)
         .pipe(sourcemaps.init())
         .pipe(stream(webpackConfigDev))
         .pipe(sourcemaps.write())
@@ -37,7 +47,7 @@ gulp.task('webpack', [], function() {
 });
 
 gulp.task('webpack:build', [], function() {
-    return gulp.src(path.JS)
+    gulp.src(path.JS)
         .pipe(sourcemaps.init())
         .pipe(stream(webpackConfigDist))
         .pipe(uglify())
@@ -47,21 +57,19 @@ gulp.task('webpack:build', [], function() {
 });
 
 gulp.task('sass',[], function() {
-  
-    return gulp.src(path.SASS) 
+    gulp.src(path.SASS)
+    .pipe(plumber({errorHandler: alertError}))
     .pipe(sass())
     .pipe(concat(path.SASS_FILENAME))
     .pipe(gulp.dest(path.BUILD));
-
 });
 
 gulp.task('sass:build',[], function() {
-  
-    return gulp.src(path.SASS) 
+    gulp.src(path.SASS)
+    .pipe(plumber({errorHandler: alertError}))
     .pipe(sass())
     .pipe(concat(path.SASS_FILENAME))
     .pipe(gulp.dest(path.DIST+"/build"));
-
 });
 
 gulp.task('browser-sync', function() {
@@ -83,9 +91,7 @@ gulp.task('reload', function() {
 });
 
 gulp.task('clean', function() {
-
     del.sync([path.DIST]);
-
 });
 
 gulp.task('copy', function() {
