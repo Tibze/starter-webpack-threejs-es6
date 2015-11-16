@@ -16,6 +16,7 @@ var stripDebug = require('gulp-strip-debug');
 var clean = require('gulp-clean');
 var plumber = require('gulp-plumber');
 var notify = require('gulp-notify');
+var notifier = require('node-notifier');
 
 var path = {
     BASE: './',
@@ -41,7 +42,11 @@ function alertError(error){
 gulp.task('webpack', [], function() {
     gulp.src(path.JS)
         .pipe(sourcemaps.init())
-        .pipe(stream(webpackConfigDev))
+        .pipe(stream(webpackConfigDev,null,function(err, stats) {
+            console.log(stats.compilation.errors.toString());
+            console.log(stats.compilation.warnings.toString());
+            notifier.notify({ title: 'Webpack Error', message: stats.compilation.errors.toString()});
+        }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.BUILD));
 });
@@ -49,7 +54,11 @@ gulp.task('webpack', [], function() {
 gulp.task('webpack:build', [], function() {
     gulp.src(path.JS)
         .pipe(sourcemaps.init())
-        .pipe(stream(webpackConfigDist))
+        .pipe(stream(webpackConfigDist,null,function(err, stats) {
+            console.log(stats.compilation.errors.toString());
+            console.log(stats.compilation.warnings.toString());
+            notifier.notify({ title: 'Webpack Error', message: stats.compilation.errors.toString()});
+        }))
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(stripDebug())
