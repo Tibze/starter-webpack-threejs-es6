@@ -16,6 +16,7 @@ var stripDebug = require('gulp-strip-debug');
 var clean = require('gulp-clean');
 
 var path = {
+    BASE: './',
     HTML: './index.html',
     SASS: ['./sass/**/*.scss'],
     JS: ['./src/**/*.js'],
@@ -66,7 +67,7 @@ gulp.task('sass:build',[], function() {
 gulp.task('browser-sync', function() {
     browserSync.init({
         server: {
-            baseDir: "./"
+            baseDir: path.BASE
         }
     });
 });
@@ -82,8 +83,9 @@ gulp.task('reload', function() {
 });
 
 gulp.task('clean', function() {
-    return gulp.src([path.DIST], {read: true, force:false})
-        .pipe(clean());
+
+    del.sync([path.DIST]);
+
 });
 
 gulp.task('copy', function() {
@@ -93,4 +95,4 @@ gulp.task('copy', function() {
 
 
 gulp.task('default', ['webpack','sass', 'browser-sync', 'watch']);
-gulp.task('build', ['copy','webpack:build','sass:build']);
+gulp.task('build', ['clean','copy','webpack:build','sass:build']);
