@@ -6,13 +6,14 @@ This is a full stack to start a THREE.js project with ES6
   - Webpack
   - Browser-Sync
   - SASS
+  - Jshint
 
 ### Version
 0.0.1
 
 ### Installation
 
-You need Gulp installed globally:
+You need Gulp & Webpack installed globally:
 
 ```sh
 $ npm install -g gulp webpack
@@ -30,12 +31,17 @@ Build
 ```sh
 $ gulp build
 ```
+
+Jshint (es6)
+```sh
+$ gulp lint
+```
+
 It will generate a production package in /dist folder
 
 ### Todos
 
  - Write Tests
- - Notifications
  - ...
 
 
