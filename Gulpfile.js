@@ -17,6 +17,8 @@ var clean = require('gulp-clean');
 var plumber = require('gulp-plumber');
 var notify = require('gulp-notify');
 var notifier = require('node-notifier');
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
 
 var path = {
     BASE: './',
@@ -38,6 +40,12 @@ function alertError(error){
     this.emit("end");  
 
 }
+
+gulp.task('lint', function() {
+      return gulp.src(path.JS)
+        .pipe(jshint({esnext:6}))
+        .pipe(jshint.reporter(stylish));
+});
 
 gulp.task('webpack', [], function() {
     gulp.src(path.JS)

@@ -14,7 +14,7 @@ class AppController {
         this.renderer = new THREE.WebGLRenderer();
 
         this.selector.appendChild( this.renderer.domElement );
-        this.handleResize()
+        this.handleResize();
         window.addEventListener('resize', this.handleResize.bind(this), false);
 
         this.addElement(new Cube3D());
