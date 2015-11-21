@@ -7,7 +7,6 @@ var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var gutil = require("gulp-util");
 var webpack = require("webpack");
-var WebpackDevServer = require("webpack-dev-server");
 var stream = require('webpack-stream');
 var browserSync = require('browser-sync').create();
 var sass = require('gulp-sass');
@@ -19,6 +18,7 @@ var notify = require('gulp-notify');
 var notifier = require('node-notifier');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
+var gulpSequence = require('gulp-sequence');
 
 var path = {
     BASE: './',
@@ -118,4 +118,11 @@ gulp.task('copy', function() {
 
 
 gulp.task('default', ['webpack','sass', 'browser-sync', 'watch']);
-gulp.task('build', ['clean','copy','webpack:build','sass:build']);
+
+// Use gulp-sequence for build task
+
+gulp.task('build', function(cb){
+    gulpSequence('clean','copy',['webpack:build','sass:build'])(function(){
+        notifier.notify({ title: 'Package build', message:"Success"});
+    });
+});
